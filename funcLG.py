@@ -86,7 +86,7 @@ def func_login():
             #    https://msal-python.readthedocs.io/en/latest/#msal.PublicClientApplication.acquire_token_by_device_flow
             # or you may even turn off the blocking behavior,
             # and then keep calling acquire_token_by_device_flow(flow) in your own customized loop
-    return {'result':result, 'proxies':proxies,  'openid':openid}
+    return {'result':result, 'proxies':proxies}
 
 def func_login_secret():
     scopes = ['https://graph.microsoft.com/.default']
@@ -122,7 +122,7 @@ def func_login_secret():
         print(result.get("error_description"))
         print(result.get("correlation_id"))  # You may need this when reporting a bug
 
-    return {'result':result, 'proxies':proxies,  'openid':openid}
+    return {'result':result, 'proxies':proxies}
 
 # 获取access_token
 # def get_access_token():
