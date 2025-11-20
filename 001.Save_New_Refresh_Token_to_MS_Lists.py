@@ -3,6 +3,11 @@ from pandas import DataFrame
 from datetime import datetime
 import funcLG
 
+# Replace these with your actual IDs
+SITE_ID = "your-site-id"
+LIST_ID = "your-list-id" 
+ITEM_ID = "your-item-id"
+
 login_return = funcLG.func_login() # to login into MS365 and get the return value info.
 result = login_return['result']
 refresh_token = result['refresh_token']
@@ -60,10 +65,6 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
 
 # Example usage:
 if __name__ == "__main__":
-    # Replace these with your actual IDs
-    SITE_ID = "your-site-id"
-    LIST_ID = "your-list-id" 
-    ITEM_ID = "your-item-id"
 
     # Get today's date in ISO format (YYYY-MM-DD or ISO 8601 format)
     today = datetime.now().strftime('%Y-%m-%d') 
