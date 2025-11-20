@@ -24,9 +24,11 @@ else: # to get this info from Github Secrets, for Github Action running applicat
     proxy_add = os.environ['proxy_add']
     key_deeplx = os.environ['key_deeplx']
 
-config.read(['config1.cfg']) # to get the scopes
-azure_settings_scope = config['azure1']
-scope_list = azure_settings_scope['scope_list'].replace(' ','').split(',')
+# config.read(['config1.cfg']) # to get the scopes
+# azure_settings_scope = config['azure1']
+# scope_list = azure_settings_scope['scope_list'].replace(' ','').split(',')
+
+scope_list = ["https://graph.microsoft.com/.default"]
 # print( 'Scope List is: ', scope_list, '\n')
 
 proxies = {
@@ -53,6 +55,7 @@ def func_login():
         )
 
     result = None
+
 
     # Firstly, check the cache to see if this end user has signed in before...
     accounts = app.get_accounts(username=username)
@@ -123,33 +126,3 @@ def func_login_secret():
         print(result.get("correlation_id"))  # You may need this when reporting a bug
 
     return {'result':result, 'proxies':proxies}
-
-# 获取access_token
-# def get_access_token():
-#     url = f"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={wx_APPID}&secret={wx_SECRET}"
-#     try:
-#         response = requests.get(url)
-#     except:
-#         response = requests.get(url, proxies=proxies)
-
-#     data = response.json()
-#     access_token = data.get("access_token")
-#     return access_token
-
-# # 推送模板消息
-# def send_template_message(openid, template_id, data):
-#     access_token = get_access_token()
-#     url = f"https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={access_token}"
-#     headers = {'Content-Type': 'application/json'}
-#     login_info = {
-#         "touser": openid,
-#         "template_id": template_id,
-#         "data": data
-#     }
-#     try:
-#         response = requests.post(url, headers=headers, data=json.dumps(login_info))
-#     except:
-#         response = requests.post(url, headers=headers, data=json.dumps(login_info),proxies=proxies)
-#     return response.json()
-
-
