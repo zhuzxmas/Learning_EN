@@ -3,7 +3,7 @@ from pandas import DataFrame
 from datetime import datetime
 import funcLG
 
-# Replace these with your actual IDs
+# Replace these with your actual IDs.
 SITE_ID = "your-site-id"
 LIST_ID = "your-list-id" 
 ITEM_ID = "your-item-id"
