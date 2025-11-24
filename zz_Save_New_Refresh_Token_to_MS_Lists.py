@@ -5,6 +5,7 @@ import os
 from pandas import DataFrame
 from datetime import datetime
 import funcLG
+import zz_GitHub_Repo_Secrects_Update
 
 # Replace these with your actual IDs.
 SITE_ID = "5e9a2fd6-d868-4d52-99e3-2780b185297e"
@@ -17,6 +18,12 @@ result = login_return['result']
 refresh_token = result['refresh_token']
 access_token = result['access_token']
 proxies = login_return['proxies']
+
+# save refresh token to Github Repo
+OWNER = "zhuzxmas"
+REPO = "Learning_EN"
+SECRET_NAME = "REFRESH_TOKEN"          # Replace with your secret name
+zz_GitHub_Repo_Secrects_Update.update_Github_Repo_Secret(OWNER, REPO, SECRET_NAME, refresh_token)
 
 # # to login into MS365 and get the return value info.
 # login_return_secret = funcLG.func_login_secret()
