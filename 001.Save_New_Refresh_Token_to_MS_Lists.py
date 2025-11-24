@@ -15,11 +15,12 @@ ITEM_ID = "1"
 login_return = funcLG.func_login()
 result = login_return['result']
 refresh_token = result['refresh_token']
+access_token = result['access_token']
 proxies = login_return['proxies']
 
-# to login into MS365 and get the return value info.
-login_return_secret = funcLG.func_login_secret()
-result_secret = login_return_secret['result']
+# # to login into MS365 and get the return value info.
+# login_return_secret = funcLG.func_login_secret()
+# result_secret = login_return_secret['result']
 
 # PATCH /sites/{site-id}/lists/{list-id}/items/{item-id}/fields
 # https://learn.microsoft.com/en-us/graph/api/listitem-update?view=graph-rest-1.0&tabs=http
@@ -39,11 +40,19 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
         dict: Response from the API
     """
     # Get access token
-    access_token = result['access_token']
+    if access_token is None:
+        # to login into MS365 and get the return value info.
+        login_return = funcLG.func_login()
+        result = login_return['result']
+        access_token = result['access_token']
+        proxies = login_return['proxies']
+    else:
+        pass
+
 
     # Construct the URL
     url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/items/{item_id}/fields"
-    url_columns = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/columns"
+    # url_columns = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/columns"
 
     # Prepare headers
     headers = {
@@ -62,13 +71,13 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
         response = requests.patch(
             url, headers=headers, data=json.dumps(payload), proxies=proxies)
 
-        if response.status_code == 200:
-            print("Item updated successfully!")
-            return response.json()
-        else:
-            print(f"Error: {response.status_code}")
-            print(f"Error message: {response.text}")
-            return None
+    if response.status_code == 200:
+        print("Item updated successfully!")
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        print(f"Error message: {response.text}")
+        return None
 
 
 # Example usage:
