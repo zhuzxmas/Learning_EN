@@ -47,6 +47,8 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
         dict: Response from the API
     """
     # Get access token
+    global access_token
+    global proxies
     if access_token is None:
         # to login into MS365 and get the return value info.
         login_return = funcLG.func_login()
@@ -99,6 +101,11 @@ if __name__ == "__main__":
             "Refresh_Token": refresh_token,
             "Refresh_Token_Last_Use_Date": today
         }}
+
+    fields_to_update = {
+            "Refresh_Token": refresh_token,
+            "Refresh_Token_Last_Use_Date": today
+        }
 
     # Update the SharePoint list item
     result = update_sharepoint_list_item(
