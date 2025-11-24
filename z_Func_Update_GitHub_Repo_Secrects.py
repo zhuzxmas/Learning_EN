@@ -67,7 +67,7 @@ if __name__ == "__main__":
     # Configuration
     OWNER = "zhuzxmas"
     REPO = "Learning_EN"
-    SECRET_NAME = "CLIENT_ID"          # Replace with your secret name
-    SECRET_VALUE = "my_secret_value"   # Replace with actual secret value
+    SECRET_NAME = "GITHUB_TOKEN"          # Replace with your secret name
+    SECRET_VALUE =  GITHUB_TOKEN  # Replace with actual secret value
 
     update_Github_Repo_Secret(OWNER, REPO, SECRET_NAME, SECRET_VALUE)
