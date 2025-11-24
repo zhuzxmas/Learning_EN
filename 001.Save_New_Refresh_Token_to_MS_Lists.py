@@ -4,9 +4,9 @@ from datetime import datetime
 import funcLG
 
 # Replace these with your actual IDs.
-SITE_ID = "your-site-id"
-LIST_ID = "your-list-id" 
-ITEM_ID = "your-item-id"
+SITE_ID = "5e9a2fd6-d868-4d52-99e3-2780b185297e"
+LIST_ID = "5e116731-b18a-4d7e-ac80-41ebafde4353" 
+ITEM_ID = "1"
 
 login_return = funcLG.func_login() # to login into MS365 and get the return value info.
 result = login_return['result']

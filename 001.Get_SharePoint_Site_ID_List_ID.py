@@ -34,9 +34,35 @@ except:
     
 if response.status_code == 200:
     print("Item updated successfully!")
+    site_lists = response.json()['value']
+    for item in site_lists:
+        if item['webUrl'] == 'https://cnmasc.sharepoint.com/sites/Strawberry':
+            site_id = item['id'].split(',')[1]
+    print(f'site id: {site_id}')
+
+    # Construct the URL to get list id:
+    url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists"
+
+    try:
+        # Make the Get request
+        response = requests.get(url, headers=headers)
+    except:
+        response = requests.get(url, headers=headers, proxies=proxies)
+
+    if response.status_code == 200:
+        list_lists = response.json()['value']
+        for item in list_lists:
+            if item['name'] == 'MS365_Application':
+                list_id = item['id']
+        print(f'list id: {list_id}')
+
 else:
     print(f"Error: {response.status_code}")
     print(f"Error message: {response.text}")
+
+
+
+
 
 # Example usage:
 if __name__ == "__main__":
