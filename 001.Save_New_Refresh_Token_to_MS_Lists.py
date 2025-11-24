@@ -39,7 +39,7 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
         dict: Response from the API
     """
     # Get access token
-    access_token = result_secret['access_token']
+    access_token = result['access_token']
 
     # Construct the URL
     url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/items/{item_id}/fields"
