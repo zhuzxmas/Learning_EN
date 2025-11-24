@@ -23,7 +23,8 @@ proxies = login_return['proxies']
 OWNER = "zhuzxmas"
 REPO = "Learning_EN"
 SECRET_NAME = "REFRESH_TOKEN"          # Replace with your secret name
-zz_GitHub_Repo_Secrects_Update.update_Github_Repo_Secret(OWNER, REPO, SECRET_NAME, refresh_token)
+zz_GitHub_Repo_Secrects_Update.update_Github_Repo_Secret(
+    OWNER, REPO, SECRET_NAME, refresh_token)
 
 # # to login into MS365 and get the return value info.
 # login_return_secret = funcLG.func_login_secret()
@@ -58,7 +59,6 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
     else:
         pass
 
-
     # Construct the URL
     url = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/items/{item_id}/fields"
     # url_columns = f"https://graph.microsoft.com/v1.0/sites/{site_id}/lists/{list_id}/columns"
@@ -69,16 +69,13 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
         'Content-Type': 'application/json'
     }
 
-    # Prepare the payload
-    payload = fields_data
-
     # Make the PATCH request
     try:
         response = requests.patch(
-            url, headers=headers, data=json.dumps(payload))
+            url, headers=headers, data=json.dumps(fields_data))
     except:
         response = requests.patch(
-            url, headers=headers, data=json.dumps(payload), proxies=proxies)
+            url, headers=headers, data=json.dumps(fields_data), proxies=proxies)
 
     if response.status_code == 200:
         print("Item updated successfully!")
@@ -93,23 +90,21 @@ def update_sharepoint_list_item(site_id, list_id, item_id, fields_data):
 if __name__ == "__main__":
 
     # Get today's date in ISO format (YYYY-MM-DD or ISO 8601 format)
-    today = datetime.now().isoformat()
+    # today = datetime.now().isoformat()
+    today = datetime.now().strftime('%Y-%m-%d')
 
     # Data to update
-    fields_to_update = {
-        "fields": {
+    # Please Note: for referesh token, its length is more than 255, so in Microsoft Lists, this column shall be multi-line, not single line
+    fields_data = {
             "Refresh_Token": refresh_token,
+            "Refresh_Token_Obtained_Date": today,
             "Refresh_Token_Last_Use_Date": today
-        }}
+    }
 
-    fields_to_update = {
-            "Refresh_Token": refresh_token,
-            "Refresh_Token_Last_Use_Date": today
-        }
 
     # Update the SharePoint list item
     result = update_sharepoint_list_item(
-        SITE_ID, LIST_ID, ITEM_ID, fields_to_update)
+        SITE_ID, LIST_ID, ITEM_ID, fields_data)
 
     if result:
         print("Updated item:", result)
