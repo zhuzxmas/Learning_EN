@@ -8,7 +8,7 @@ import funcLG
 # refresh_token = result['refresh_token']
 # proxies = login_return['proxies']
 
-login_return_secret = funcLG.func_login_secret() # to login into MS365 and get the return value info.
+login_return_secret = funcLG.func_login() # to login into MS365 and get the return value info.
 result_secret = login_return_secret['result']
 proxies = login_return_secret['proxies']
 
