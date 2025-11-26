@@ -150,10 +150,9 @@ def func_login():
         }
 
         message_str1 = flow['user_code']
-        message_str2 = flow['verification_uri']
-
-        send_Teams_Channel_Message(message_str2)
         send_Teams_Channel_Message(message_str1)
+        # message_str2 = flow['verification_uri']
+        # send_Teams_Channel_Message(message_str2)
 
         # 推送消息
         # result1 = send_template_message(openid, template_id, data)
@@ -233,8 +232,8 @@ def send_Teams_Channel_Message(message_str, team_id=team_id, channel_id=channel_
     access_token_app = result_app['access_token']
     proxies = login_return_app['proxies']
 
-    refresh_token = get_refresh_token_from_SP(access_token_app)
-    access_token = get_access_token_with_refresh(refresh_token)
+    refresh_token = get_refresh_token_from_SP(access_token=access_token_app)
+    access_token = get_access_token_with_refresh(refresh_token=refresh_token)
 
     # Construct the URL
     # POST /teams/{team-id}/channels/{channel-id}/messages
@@ -259,6 +258,14 @@ def send_Teams_Channel_Message(message_str, team_id=team_id, channel_id=channel_
     except:
         response = requests.post(
             url, headers=headers, data=json.dumps(fields_data), proxies=proxies)
+
+    if response.status_code == 200:
+        print("Message sent to Teams successfully!")
+        return response.json()
+    else:
+        print(f"Error: {response.status_code}")
+        print(f"Error message: {response.text}")
+        return None
 
 
 def update_sharepoint_list_item(fields_data,access_token, site_id=site_id, list_id=list_id, item_id=item_id):
